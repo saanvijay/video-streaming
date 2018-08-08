@@ -21,10 +21,10 @@ namespace vjp {
     class videoStream {
         
         IplImage* m_img; 
-        IplImage* m_video;
+        IplImage* m_video_frame;
         
     public:
-        videoStream():m_img(NULL),m_video(NULL) {}
+        videoStream():m_img(NULL),m_video_frame(NULL) {}
         ~videoStream() {}
         videoStream(const videoStream&) = delete;
         videoStream& operator=(const videoStream&) = delete;

@@ -15,11 +15,10 @@ using namespace vjp;
 void videoStream::playVideo(const char *videofile) {
     setWindowSettings();
     CvCapture *capture = cvCreateFileCapture(videofile);
-    IplImage *frame = NULL;
     while(true){
-        frame = cvQueryFrame(capture);
-        if(!frame) break;
-        cvShowImage("Play Video", frame);
+        m_video_frame = cvQueryFrame(capture);
+        if(!m_video_frame) break;
+        cvShowImage("Play Video", m_video_frame);
         char c = cvWaitKey(33);
         if (c==27) break;
     }
