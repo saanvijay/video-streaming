@@ -7,12 +7,7 @@ int main(int argc, char *argv[])
     int input;
     string videoFileName="";
     string imgFileName="";
-    
-   // if(argc < NO_OF_ARGS ){
-      //  printf("Usage: videoStramMain <image-file-name> <video-file-name>\n");
-      //  exit(0);
-   // }
-    
+  
     std::cout << "OpenCV Samples" << std::endl;
     std::cout << "---------------" << std::endl;
     std::cout << "1. Display Image" << std::endl;
@@ -32,8 +27,12 @@ int main(int argc, char *argv[])
         exit(0); 
         }
     
-    // Create new instance for video stream class
+    // Create new instance for video stream class 
     unique_ptr<videoStream> vStream(new videoStream);
+    if(vStream == nullptr) {
+            cout << "Unable to create the memory for vStream" << endl;
+            exit(0);
+    }
   
     if (input == VIDEO_INPUT && videoFileName != "") { 
             vStream->playVideo(videoFileName.c_str()); 
