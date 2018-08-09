@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
         }
     
     // Create new instance for video stream class
-    videoStream *vStream = new videoStream;
+    unique_ptr<videoStream> vStream(new videoStream);
   
     if (input == VIDEO_INPUT && videoFileName != "") { 
             vStream->playVideo(videoFileName.c_str()); 
@@ -41,19 +41,6 @@ int main(int argc, char *argv[])
     else {
         // Load Image and set videoStream pointer  
         vStream->setVideoStreamImage(imgFileName.c_str());
-  
-  
-  
-        if (!vStream->getVideoStreamImage())
-            std::cout << "Unable to load the image" << std::endl;
-      
-        // If image loaded properly then get the image details
-        vStream->getImageData(width, height, channels);
-
-  
-        std::cout << "Image Height = "<< height << std::endl;
-        std::cout << "Image Width  = "<< width << std::endl;
-        std::cout << "Image Channels = "<<channels << std::endl; 
 
         // Window Settings
         vStream->setWindowSettings();
@@ -62,8 +49,6 @@ int main(int argc, char *argv[])
         vStream->displayImage();
     
     }
-
-  if (vStream) delete vStream;
     
   return 0;
 }

@@ -2,11 +2,14 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
 #include <iostream>
 #include <string>
+using namespace cv;
 using namespace std;
+
 
 #define MAIN_WINDOW_NAME "VideoStreamSample"
 #define MAIN_WINDOW_X_POS 100
@@ -20,24 +23,25 @@ namespace vjp {
     
     class videoStream {
         
-        IplImage* m_img; 
-        IplImage* m_video_frame;
+        Mat m_img; 
+        Mat m_video_frame;
+        VideoCapture m_cap;
         
     public:
-        videoStream():m_img(NULL),m_video_frame(NULL) {}
+        videoStream() {}
         ~videoStream() {}
         videoStream(const videoStream&) = delete;
         videoStream& operator=(const videoStream&) = delete;
         
-        void getImageData(int &width, int &height, int &channels);
         void setWindowSettings();
         inline  void setVideoStreamImage(const char *imgFile) { 
-            m_img = cvLoadImage(imgFile);
+            m_img = imread(imgFile, CV_LOAD_IMAGE_COLOR);
         }
-        inline  IplImage* getVideoStreamImage() { return m_img; }
+        inline  Mat getVideoStreamImage() { return m_img; }
+        inline void setVideoCapture(const char *videoFilename) { m_cap.open(videoFilename);}
         inline void displayImage() {
-            cvShowImage(MAIN_WINDOW_NAME,  m_img);
-            cvWaitKey(0);
+            imshow(MAIN_WINDOW_NAME,  m_img);
+            waitKey(0);
         }
         void playVideo(const char*);
     };
